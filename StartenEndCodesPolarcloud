@@ -1,0 +1,31 @@
+H1 Start en endcodes in Polarcloud
+For my printer Adventurer3 these codes are pre-defined in Polarcloud (https://polar3d.com/)
+Startcode:
+xgcode 1.0 ;start gcode
+M140 S {TEMPBED} ; Temperature to set the platform to, in degrees C
+M104 S {TEMP0} T0 ; Temperature to set the toolhead to  T0 default or T1 
+M104 S0 T1 ; Set second toolhead to 0 degrees C non existent in Adventurer 3
+M107 ; Disable cooling fan
+G90 ; All coordinates from now on are absolute relative to the origin of the machine
+G28 ; Move to the home position
+M132 X Y Z A B ; Load current home position from EEPROM
+G1 Z50.00 F400 ; Move to pos Z50 at feedrate F400
+G161 X Y F3300 ; unknown
+M6 T0 ; Wait for the toolhead to reach target temperature
+M907 X100 Y100 Z40 A80 B20 ; Set digital potentiometer value 
+M108 T0 ; Set toolhead to T0
+G1 Z.20 F400 ; Move to pos Z0.20 at feedrate F400
+
+endcode:
+M140 S0 : Set the platform to 0 degrees C
+M104 S0 T0 ; Set toolhead to 0 degrees C
+G28 X Y ; Move to home position
+M132 X Y Z A B ; Load current home position from EEPROM
+G91 ; All coordinates from now on are relative to the last position
+M18 ; disable stepper motors all axes
+
+Note:  The print results in Polarcloud have been good so far.
+The {} may mean that the value from the setting of the profile is assumed. Polarcloud creates the slice itself, or processes a strange gcode file; in that case, the temperature instructions are already set with the controller prior to the start of the print job. Earlier I found that a certain gcode that apparently did not contain the correct temperature instructions was processed at the set temperature. 
+
+
+Translated with www.DeepL.com/Translator (free version)
